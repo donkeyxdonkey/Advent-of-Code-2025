@@ -55,7 +55,6 @@ internal class Advent11
             _dacIndex = tempTargetMap["dac"];
             _fftIndex = tempTargetMap["fft"];
             Part2();
-            //Utility.TimeIt(() => Part2());
         }
     }
 
@@ -90,12 +89,13 @@ internal class Advent11
 
     private static void Part2()
     {
-        _p2mem ??= [];
         Device start = _input[_svrIndex];
         long result = 0;
 
         for (int i = 0; i < start.Len; i++)
-            result += FindItAgain(start.Targets[i], false, false);
+        {
+            result += FindItAgain(start.Targets[i], dacFound: false, fftFound: false);
+        }
 
         Console.WriteLine("Result Part2: " + result);
     }
@@ -119,7 +119,9 @@ internal class Advent11
         long total = 0;
 
         for (int i = 0; i < dev.Len; i++)
+        {
             total += FindItAgain(dev.Targets[i], dacFound, fftFound);
+        }
 
         _p2mem[key] = total;
         return total;
